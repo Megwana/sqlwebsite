@@ -1,28 +1,26 @@
 from openroad import db
+from flask_login import UserMixin
+from sqlalchemy.sql import func
 
 
-class Category(db.Model):
-    # schema for the Category model
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    category_name = db.Column(db.String(30), unique=True, nullable=False)
-    tasks = db.relationship("Task", backref="category", cascade="all, delete", lazy=True)
+    email = db.Column(db.String(150), unique=True)
+    password = db.Column(db.String(50))
+    first_name = db.Column(db.String(50))
+    notes = db.relationship('Triproute')
 
     def __repr__(self):
         # __repr__ to represent itself in the form of a string
-        return self.category_name
-
+        return self.id
 
 class Triproute(db.Model):
-    # schema for the Task model
     id = db.Column(db.Integer, primary_key=True)
-    task_name = db.Column(db.String(100), unique=True, nullable=False)
-    task_description = db.Column(db.Text, nullable=False)
-    is_urgent = db.Column(db.Boolean, default=False, nullable=False)
-    due_date = db.Column(db.Date, nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey("category.id", ondelete="CASCADE"), nullable=False)
+    data = db.Column(db.String(5000))
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         # __repr__ to represent itself in the form of a string
-        return "#{0} - Task: {1} | Urgent: {2}".format(
-            self.id, self.task_name, self.is_urgent
-        )
+        return self.id, self.data, self.date
+    

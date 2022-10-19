@@ -23,7 +23,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #023020;">
-      <span><i class="fa-regular fa-map"></i></span>
+      <span class="logo"><i class="fa-regular fa-map"></i> Open Road</span>
         <button 
         class="navbar-toggler" 
         type="button" 
@@ -62,11 +62,16 @@
     {% endif %}
     {% endwith %}
 
-    <div class="container">
+    <div>
         {% block content %} 
-        hello world
         {% endblock %}
     </div>
+
+    <nav class="navbar fixed-bottom bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Footer</a>
+      </div>
+    </nav>
     <script
     src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
